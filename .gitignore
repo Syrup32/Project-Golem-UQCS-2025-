@@ -1,0 +1,88 @@
+# This .gitignore file should be placed at the root of your Unity project directory
+
+# =============== #
+# Unity Generated  #
+# =============== #
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+sysinfo.txt
+
+# ====================== #
+# Asset Store and Cache  #
+# ====================== #
+/Assets/AssetStoreTools*
+/Assets/StreamingAssets/aa/*
+/Assets/StreamingAssets/Unity/*
+/.uvproj
+/.uvopt
+
+# ============ #
+# Auto Reports #
+# ============ #
+*.apk
+*.aab
+*.unitypackage
+
+# ================= #
+# Visual Studio / C# #
+# ================= #
+.vs/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.VC.opendb
+
+# ===================== #
+# Rider / JetBrains IDE #
+# ===================== #
+.idea/
+*.sln.iml
+
+# =============== #
+# OS Generated    #
+# =============== #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ================== #
+# Builds / Packages  #
+# ================== #
+/[Bb]uilds/
+/[Bb]uild/
+/[Pp]ackages/com.unity.*
+/Packages/com.unity.collab-proxy/
+
+# =================== #
+# Addressables Cache  #
+# =================== #
+/Assets/AddressableAssetsData/*/*.bin*
+/Assets/AddressableAssetsData/*/*.hash
+
+# =================== #
+# Lightmap / GI Data  #
+# =================== #
+/Assets/**/Lightmap-*
+/Assets/**/LightingData.asset
+/Assets/**/ReflectionProbe-*.exr
