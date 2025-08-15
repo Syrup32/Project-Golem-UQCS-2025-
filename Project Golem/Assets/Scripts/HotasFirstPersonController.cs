@@ -133,7 +133,7 @@ namespace StarterAssets
 		}
 		private void CameraRotation()
 		{
-			Vector2 look = hotasThrottleInput != 0 ? hotasLookInput : _input.look;
+			Vector2 look = hotasLookInput.magnitude > 0.01f ? hotasLookInput : _input.look;
 			if (look.sqrMagnitude >= _threshold)
 			{
 				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
