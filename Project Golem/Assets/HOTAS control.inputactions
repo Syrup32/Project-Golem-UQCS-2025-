@@ -1,0 +1,242 @@
+{
+    "version": 1,
+    "name": "HOTAS control",
+    "maps": [
+        {
+            "name": "GOLEM Controls",
+            "id": "a1823149-b4e8-4d85-a995-eeb6751bcf23",
+            "actions": [
+                {
+                    "name": "hori-look",
+                    "type": "Value",
+                    "id": "3bf54381-21a4-4a52-9a5f-04e366947102",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "vert-look",
+                    "type": "Value",
+                    "id": "15208dd5-a4aa-4bb4-b466-4600dade9fd2",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "throttle",
+                    "type": "Value",
+                    "id": "255f88e0-e042-475f-941b-9871c8c90dfc",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "aefcea10-e50f-4e43-9af5-6467e164fb4c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "jump",
+                    "type": "Button",
+                    "id": "241794bb-8f6b-4741-8562-a13ecceac0e3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "look_hotas",
+                    "type": "Value",
+                    "id": "321eadda-4324-4f8b-aba7-f653bec680ae",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "look_sensitivity",
+                    "type": "Value",
+                    "id": "aeb06f14-b2be-46d3-bb3a-3b49cdcd4b18",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "a8ea4b85-1f7f-4110-933f-feed91544bba",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4deded3d-b305-4587-89da-f49f55eda4a5",
+                    "path": "<Joystick>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "hori-look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "827546cd-9a9f-406a-8dce-add28d71aa5f",
+                    "path": "<Joystick>/stick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "vert-look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d6d37d6f-8f31-4342-bc60-56c3d904cf3e",
+                    "path": "<Joystick>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "throttle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "171d2e91-0dc6-4b7a-abe0-371ff27dddca",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "6ce6e86b-3ffd-4a6d-b9bc-9b9a8b49dc69",
+                    "path": "2DVector(mode=2)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "look_hotas",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "13901d51-85b0-45fd-813a-1779b32b5b2a",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/stick/up",
+                    "interactions": "",
+                    "processors": "StickDeadzone",
+                    "groups": "",
+                    "action": "look_hotas",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "4a754bab-ac33-4539-a3f4-5c8fb3298d25",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/stick/down",
+                    "interactions": "",
+                    "processors": "StickDeadzone",
+                    "groups": "",
+                    "action": "look_hotas",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "089c6ac8-0cb9-47b5-b593-9084c7cf343a",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/stick/left",
+                    "interactions": "",
+                    "processors": "StickDeadzone",
+                    "groups": "",
+                    "action": "look_hotas",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "3246b710-d8a3-4401-a933-93e0fbbefd19",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/stick/right",
+                    "interactions": "",
+                    "processors": "StickDeadzone",
+                    "groups": "",
+                    "action": "look_hotas",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "5aebe443-d03b-4418-94cd-e90be44f85e4",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/rx",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "look_sensitivity",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1697308-9c3b-4000-ac31-732d1d327d51",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "70205680-8470-4c62-91a4-165e655f756a",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/button8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3a8d78a5-dcff-41ac-b638-dbd1626110f7",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/button7",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "New Control Scheme",
+            "bindingGroup": "New Control Scheme",
+            "devices": [
+                {
+                    "devicePath": "<HID::Logitech X52 Professional H.O.T.A.S.>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

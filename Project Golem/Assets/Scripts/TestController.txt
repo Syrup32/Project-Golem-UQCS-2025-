@@ -1,0 +1,87 @@
+// This is a merged version of your FirstPersonController
+// with HOTAS throttle + stick support added.
+
+using UnityEngine;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
+
+namespace StarterAssets
+{
+	[RequireComponent(typeof(CharacterController))]
+#if ENABLE_INPUT_SYSTEM
+	[RequireComponent(typeof(PlayerInput))]
+#endif
+	public class FirstPersonController : MonoBehaviour
+	{
+		// --- Existing fields (unchanged for brevity) ---
+		// ...
+
+		// HOTAS Input
+		[Header("HOTAS Input")]
+		public InputActionAsset hotasInputActions;
+		private InputAction hotasThrottle;
+		private InputAction hotasLook;
+		private Vector2 hotasLookInput;
+		private float hotasThrottleInput;
+
+		private bool hotasActive => Mathf.Abs(hotasThrottleInput) > 0.01f || hotasLookInput.magnitude > 0.01f;
+
+		private void Start()
+		{
+			// ... existing init
+
+			// HOTAS bindings
+			if (hotasInputActions != null)
+			{
+				var map = hotasInputActions.FindActionMap("GOLEM Controls");
+				if (map != null)
+				{
+					hotasThrottle = map.FindAction("throttle");
+					hotasLook = map.FindAction("look_hotas");
+					map.Enable();
+				}
+			}
+		}
+
+		private void Update()
+		{
+			GroundedCheck();
+			ReadHotasInput();
+			JumpAndGravity();
+			Move();
+		}
+
+		private void ReadHotasInput()
+		{
+			if (hotasThrottle != null) hotasThrottleInput = hotasThrottle.ReadValue<float>();
+			if (hotasLook != null) hotasLookInput = hotasLook.ReadValue<Vector2>();
+		}
+
+		private void CameraRotation()
+		{
+			Vector2 look = hotasActive ? hotasLookInput : _input.look;
+			if (look.sqrMagnitude >= _threshold)
+			{
+				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+				_cinemachineTargetPitch += look.y * RotationSpeed * deltaTimeMultiplier;
+				_rotationVelocity = look.x * RotationSpeed * deltaTimeMultiplier;
+
+				_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+				CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
+				transform.Rotate(Vector3.up * _rotationVelocity);
+			}
+		}
+
+		private void Move()
+		{
+			float targetSpeed = hotasActive ? MoveSpeed : (_input.sprint ? SprintSpeed : MoveSpeed);
+
+			float forwardInput = hotasActive ? -hotasThrottleInput : _input.move.y;
+			Vector3 inputDirection = transform.forward * forwardInput;
+
+			_speed = targetSpeed;
+			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+		}
+	}
+}
