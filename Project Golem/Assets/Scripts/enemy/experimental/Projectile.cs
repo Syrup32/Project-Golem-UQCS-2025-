@@ -41,17 +41,25 @@ public class Projectile : MonoBehaviour
     */
     private void OnTriggerEnter(Collider other)
     {
-        if (hasHit) return;
+       if (hasHit) return;
         hasHit = true;
 
         int otherLayer = other.gameObject.layer;
 
+        if (((1 << otherLayer) & playerLayer) != 0)
+        {
+            // Try getting PlayerHealth from root (in case collider is on a child)
+            PlayerHealth playerHealth = other.GetComponentInParent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                Debug.Log("Projectile hit the player!");
+                playerHealth.TakeDamage(20);
+            }
+        }
+
         if (((1 << otherLayer) & groundLayer) != 0 || ((1 << otherLayer) & playerLayer) != 0)
         {
-            Debug.Log("Projectile hit: " + other.name);
-            Debug.Log("Trigger Entered: " + other.name + " | Layer: " + LayerMask.LayerToName(other.gameObject.layer));
-
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
