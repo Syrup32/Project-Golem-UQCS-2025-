@@ -7,6 +7,8 @@ public class EnemyAiTutorial : MonoBehaviour
 
     public Transform player;
 
+    public Transform projectileSpawnPoint;
+
     public LayerMask whatIsGround, whatIsPlayer;
 
     public float health;
@@ -20,6 +22,8 @@ public class EnemyAiTutorial : MonoBehaviour
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
+    public Transform projectileContainer;
+    public float projectileSpeed = 25f;
 
     //States
     public float sightRange, attackRange;
@@ -78,12 +82,22 @@ public class EnemyAiTutorial : MonoBehaviour
 
         transform.LookAt(player);
 
-        if(!alreadyAttacked)
+        if(!alreadyAttacked && projectile != null)
         {
             //Attack code here
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            //Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            //Rigidbody rb = Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation,projectileContainer).GetComponent<Rigidbody>();
+
+            //Vector3 targetPos = new Vector3(player.position.x, projectileSpawnPoint.position.y, player.position.z);
+            //Vector3 direction = (targetPos - projectileSpawnPoint.position).normalized;
+            //rb.AddForce(direction * 32f, ForceMode.Impulse);
+            //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+
+            Vector3 targetPos = new Vector3(player.position.x, projectileSpawnPoint.position.y, player.position.z);
+            Vector3 direction = (targetPos - projectileSpawnPoint.position).normalized;
+
+            Rigidbody rb = Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.velocity = direction * projectileSpeed; // ← THIS sets it perfectly straight
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);

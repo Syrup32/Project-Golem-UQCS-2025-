@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - CinemachineTarget
+  - Ground
+  - Walls
+  - Enemies
   layers:
   - Default
   - TransparentFX
