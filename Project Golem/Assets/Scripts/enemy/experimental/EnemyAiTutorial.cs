@@ -97,7 +97,7 @@ public class EnemyAiTutorial : MonoBehaviour
             Vector3 direction = (targetPos - projectileSpawnPoint.position).normalized;
 
             Rigidbody rb = Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.velocity = direction * projectileSpeed; // ← THIS sets it perfectly straight
+            rb.linearVelocity = direction * projectileSpeed; // ← THIS sets it perfectly straight
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);

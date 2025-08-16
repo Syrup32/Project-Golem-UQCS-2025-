@@ -3,8 +3,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     // Set these in the Inspector or assign them in Start()
-    public LayerMask groundLayer;
-    public LayerMask playerLayer;
+    public LayerMask EgroundLayer;
+    public LayerMask EplayerLayer;
 
     private bool hasHit = false;
 
@@ -41,12 +41,14 @@ public class Projectile : MonoBehaviour
     */
     private void OnTriggerEnter(Collider other)
     {
+       
        if (hasHit) return;
         hasHit = true;
 
         int otherLayer = other.gameObject.layer;
+        Debug.Log("Enemy projectile triggered with: " + other.name + " | Layer: " + LayerMask.LayerToName(otherLayer));
 
-        if (((1 << otherLayer) & playerLayer) != 0)
+        if (((1 << otherLayer) & EplayerLayer) != 0)
         {
             // Try getting PlayerHealth from root (in case collider is on a child)
             PlayerHealth playerHealth = other.GetComponentInParent<PlayerHealth>();
@@ -57,7 +59,7 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        if (((1 << otherLayer) & groundLayer) != 0 || ((1 << otherLayer) & playerLayer) != 0)
+        if (((1 << otherLayer) & EgroundLayer) != 0 || ((1 << otherLayer) & EplayerLayer) != 0)
         {
             Destroy(this.gameObject);
         }
