@@ -87,3 +87,4 @@ Thumbs.db
 /Assets/**/LightingData.asset
 /Assets/**/ReflectionProbe-*.exr
 Assets/MediumMechStriker/Textures/MediumMechStriker/MediumMechStrikerPSDSourcefile.rar
+*.rar
