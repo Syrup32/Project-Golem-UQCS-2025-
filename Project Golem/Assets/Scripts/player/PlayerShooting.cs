@@ -54,8 +54,22 @@ public class PlayerShooting : MonoBehaviour
 
     private void Shoot()
     {
+        //Legacy function go back if it dont work
+        /*
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.linearVelocity = firePoint.forward * projectileSpeed;
+        */
+        // Define the direction you want the projectile to travel
+        Vector3 dir = firePoint.forward;  // ensure firePoint’s blue axis (Z) points out the muzzle
+
+        // Spawn with correct rotation
+        Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
+        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, rot);
+
+        // Apply velocity
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        rb.linearVelocity = dir * projectileSpeed;  // (use rb.velocity if you're not on Unity Physics package)
+
     }
 }

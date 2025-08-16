@@ -91,7 +91,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 1
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &5564950327446697982
@@ -154,7 +154,7 @@ MonoBehaviour:
   hitClip: {fileID: 8300000, guid: 907111ccc095a3a4f82839ffbba6c134, type: 3}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 10
+  timeBetweenAttacks: 5
   sightRange: 20
   attackRange: 4
   playerInSightRange: 0

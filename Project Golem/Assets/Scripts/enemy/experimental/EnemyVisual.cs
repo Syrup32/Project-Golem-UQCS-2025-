@@ -12,6 +12,39 @@ public class EnemyVisual : MonoBehaviour
     Transform _instancedModel;
     Animator _anim;
 
+    public void BuildAutoColliderFromRenderers()
+    {
+        // Collect combined bounds of the visual
+        var rends = _instancedModel.GetComponentsInChildren<Renderer>(true);
+        if (rends == null || rends.Length == 0) return;
+
+        var b = rends[0].bounds;
+        for (int i = 1; i < rends.Length; i++) b.Encapsulate(rends[i].bounds);
+
+        // Ensure there is a CapsuleCollider on the ROOT (same object as EnemyAiTutorial)
+        var col = GetComponent<CapsuleCollider>();
+        if (!col) col = gameObject.AddComponent<CapsuleCollider>();
+        col.direction = 1; // Y
+
+        // Bounds are in world space; convert center to local space of the root
+        Vector3 centerLocal = transform.InverseTransformPoint(b.center);
+
+        // Choose radius as the smaller horizontal half-extent
+        float radius = Mathf.Min(b.extents.x, b.extents.z);
+        // Height at least 2*radius (capsule minimum)
+        float height = Mathf.Max(b.size.y, radius * 2f + 0.01f);
+
+        // If your enemy root stands on the ground (NavMeshAgent base offset = 0),
+        // place the capsule so its bottom sits at y=0:
+        // bottomY = centerY - height/2 + radius  => set to 0
+        float centerY = height * 0.5f - radius;
+
+        col.center = new Vector3(centerLocal.x, centerY, centerLocal.z);
+        col.radius = radius;
+        col.height = height;
+        col.isTrigger = false; // your projectile is a trigger, so enemy collider can be solid
+    }
+    
     public void ApplySkin(EnemySkinDefinition skin)
     {
         if (visualRoot == null) { Debug.LogError("EnemyVisual: visualRoot not set."); return; }
@@ -64,7 +97,10 @@ public class EnemyVisual : MonoBehaviour
             projectileSpawnPoint = auto;
             Debug.LogWarning($"{name}: No projectile socket found; created fallback '{auto.name}'.");
         }
+        BuildAutoColliderFromRenderers();
     }
+
+
 
     public Animator GetAnimator() => _anim;
 
