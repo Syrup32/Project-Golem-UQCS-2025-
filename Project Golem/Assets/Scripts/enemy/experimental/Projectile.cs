@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour
         hasHit = true;
 
         int otherLayer = other.gameObject.layer;
-        Debug.Log("Enemy projectile triggered with: " + other.name + " | Layer: " + LayerMask.LayerToName(otherLayer));
+        //Debug.Log("Enemy projectile triggered with: " + other.name + " | Layer: " + LayerMask.LayerToName(otherLayer));
 
         if (((1 << otherLayer) & EplayerLayer) != 0)
         {
@@ -54,7 +54,7 @@ public class Projectile : MonoBehaviour
             PlayerHealth playerHealth = other.GetComponentInParent<PlayerHealth>();
             if (playerHealth != null)
             {
-                Debug.Log("Projectile hit the player!");
+                //Debug.Log("Projectile hit the player!");
                 playerHealth.TakeDamage(20);
             }
         }

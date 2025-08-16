@@ -76,7 +76,9 @@ namespace StarterAssets
 
 		private bool IsCurrentDeviceMouse => _playerInput != null && _playerInput.currentControlScheme == "KeyboardMouse";
 		private bool IsHotasJumpPressed => hotasJump != null && hotasJump.ReadValue<float>() > 0.5f;
-		private bool IsJumpPressedThisFrame => (_input.jump || IsHotasJumpPressed) && !_wasJumpPressedLastFrame;
+		//private bool IsJumpPressedThisFrame => (_input.jump || IsHotasJumpPressed) && !_wasJumpPressedLastFrame;
+		private bool IsJumpPressedThisFrame => _input.ConsumeJumpPressedThisFrame() || IsHotasJumpPressed;
+
 
 		private void Awake()
 		{
@@ -119,6 +121,7 @@ namespace StarterAssets
 
 		private void Update()
 		{
+			_wasJumpPressedLastFrame = _input.jump || IsHotasJumpPressed;
 			ReadHotasInput();
 			JumpAndGravity();
 			GroundedCheck();
@@ -267,8 +270,9 @@ namespace StarterAssets
 					_verticalVelocity = -2f;
 				}
 
-				//Debug.Log($"[JumpCheck] jump={_input.jump}, IsHotasJump={IsHotasJumpPressed}, jumpTimeoutDelta={_jumpTimeoutDelta}, Grounded={Grounded}");
-
+				Debug.Log($"[JumpCheck] jump={_input.jump}, IsHotasJump={IsHotasJumpPressed}, jumpTimeoutDelta={_jumpTimeoutDelta}, Grounded={Grounded}");
+				Debug.Log($"[JumpCheck] jumpInput={_input.jump}, hotasJump={IsHotasJumpPressed}, isJumpPressedThisFrame={IsJumpPressedThisFrame}, jumpTimeoutDelta={_jumpTimeoutDelta}, grounded={Grounded}");
+				
 				if (IsJumpPressedThisFrame && _jumpTimeoutDelta <= 0.0f)
 				{
 					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
@@ -296,7 +300,7 @@ namespace StarterAssets
 			}
 
 			// Apply gravity
-			if (_verticalVelocity < _terminalVelocity)
+			if (!Grounded && _verticalVelocity < _terminalVelocity)
 			{
 				_verticalVelocity += Gravity * Time.deltaTime;
 			}

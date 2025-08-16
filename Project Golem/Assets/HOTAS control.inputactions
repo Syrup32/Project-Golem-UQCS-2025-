@@ -70,9 +70,27 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "New action",
+                    "name": "weapon1",
                     "type": "Button",
                     "id": "a8ea4b85-1f7f-4110-933f-feed91544bba",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "weapon2",
+                    "type": "Button",
+                    "id": "9d18b9e3-86c0-4a36-b511-8d2d43e2da7b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "weapon3",
+                    "type": "Button",
+                    "id": "6d13a891-a46d-4972-b618-98d63327739c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -193,11 +211,22 @@
                 {
                     "name": "",
                     "id": "b1697308-9c3b-4000-ac31-732d1d327d51",
-                    "path": "",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/button10",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "weapon1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff2dcdc7-f462-45d8-8605-5dac89e0f648",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/button9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "weapon1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -220,6 +249,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b47525f-851d-4f7c-a34a-d720d241bb86",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/button11",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "weapon2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "58b76afa-b20b-4006-bfe8-b96477fe1e31",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/button12",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "weapon2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9cacf534-b51a-43bd-bb38-cb29551062d6",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/button14",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "weapon3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a35768fb-7ef4-49b2-936d-4219257c4a57",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/button13",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "weapon3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

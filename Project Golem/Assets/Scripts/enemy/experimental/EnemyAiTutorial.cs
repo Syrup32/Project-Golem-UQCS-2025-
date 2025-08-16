@@ -1,5 +1,9 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;          // <-- needed for IEnumerator
+// (optional if you use List<T> etc.)
+using System.Collections.Generic;
+
 
 public class EnemyAiTutorial : MonoBehaviour
 {
@@ -12,6 +16,10 @@ public class EnemyAiTutorial : MonoBehaviour
     public LayerMask whatIsGround, whatIsPlayer;
 
     public float health;
+
+    public Renderer[] renderersToFlash;
+    public AudioSource hitAudio;
+    public AudioClip hitClip;
 
     //Patroling
     public Vector3 walkPoint;
@@ -112,8 +120,17 @@ public class EnemyAiTutorial : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-
+        if (hitAudio && hitClip) hitAudio.PlayOneShot(hitClip);
+        StartCoroutine(Flash());
         if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+    }
+
+    IEnumerator Flash()
+    {
+        const float t = 0.1f;
+        foreach (var r in renderersToFlash) r.material.EnableKeyword("_EMISSION");
+        yield return new WaitForSeconds(t);
+        foreach (var r in renderersToFlash) r.material.DisableKeyword("_EMISSION");
     }
 
     private void DestroyEnemy()

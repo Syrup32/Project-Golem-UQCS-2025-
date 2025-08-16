@@ -10,7 +10,9 @@ namespace StarterAssets
 		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
-		public bool jump {get; private set;}
+		public bool jump;
+		private bool _jumpPressedThisFrame;
+
 		public bool sprint;
 
 		[Header("Movement Settings")]
@@ -28,7 +30,7 @@ namespace StarterAssets
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
+			if (cursorInputForLook)
 			{
 				LookInput(value.Get<Vector2>());
 			}
@@ -45,11 +47,10 @@ namespace StarterAssets
 		}
 #endif
 
-
 		public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
-		} 
+		}
 
 		public void LookInput(Vector2 newLookDirection)
 		{
@@ -58,15 +59,32 @@ namespace StarterAssets
 
 		public void JumpInput(bool newJumpState)
 		{
-			Debug.Log($"JumpInput called: {newJumpState}");
+			// Trigger "jump this frame" only on rising edge
+			if (newJumpState && !jump)
+			{
+				_jumpPressedThisFrame = true;
+			}
 			jump = newJumpState;
+		}
+
+		/// <summary>
+		/// Call this once per frame to check if jump was pressed this frame.
+		/// </summary>
+		public bool ConsumeJumpPressedThisFrame()
+		{
+			if (_jumpPressedThisFrame)
+			{
+				_jumpPressedThisFrame = false;
+				return true;
+			}
+			return false;
 		}
 
 		public void SprintInput(bool newSprintState)
 		{
 			sprint = newSprintState;
 		}
-		
+
 		private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);
@@ -77,5 +95,4 @@ namespace StarterAssets
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}
-	
 }
