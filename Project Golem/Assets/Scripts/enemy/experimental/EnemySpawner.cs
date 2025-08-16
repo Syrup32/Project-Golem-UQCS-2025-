@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -32,4 +32,37 @@ public class EnemySpawner : MonoBehaviour
 
     // optional: auto-spawn for testing
     private void Start() => SpawnWave();
+}
+*/
+
+using UnityEngine;
+
+public class EnemySpawner : MonoBehaviour
+{
+    public EnemyAiTutorial enemyPrefab;        // drag Enemy.prefab here
+    public EnemySkinDefinition[] skins;        // drag EnemySkin_Striker, EnemySkin_Assault
+    public Transform[] spawnPoints;            // drag your Spawn1/Spawn2 empties
+    public float spawnInterval = 5f;
+    public int startCount = 2;
+
+    private void Start()
+    {
+        for (int i = 0; i < startCount; i++) SpawnOne();
+        InvokeRepeating(nameof(SpawnOne), spawnInterval, spawnInterval);
+    }
+
+    void SpawnOne()
+    {
+        if (enemyPrefab == null || skins.Length == 0 || spawnPoints.Length == 0) return;
+
+        var sp = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        var enemy = Instantiate(enemyPrefab, sp.position, sp.rotation);
+
+        var visual = enemy.GetComponent<EnemyVisual>();
+        if (visual != null)
+        {
+            var skin = skins[Random.Range(0, skins.Length)];
+            visual.ApplySkin(skin);
+        }
+    }
 }

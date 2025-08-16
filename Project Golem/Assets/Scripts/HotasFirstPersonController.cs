@@ -110,7 +110,7 @@ namespace StarterAssets
 					map.Enable();
 				}
 			}
-			_virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+			_virtualCamera = Object.FindFirstObjectByType<CinemachineVirtualCamera>();
 			if (_virtualCamera != null)
 			{
 				_perlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();

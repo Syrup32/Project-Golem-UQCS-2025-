@@ -55,6 +55,13 @@ public class EnemyAiTutorial : MonoBehaviour
         projectileSpawnPoint = _visual != null ? _visual.projectileSpawnPoint : null;
     }
     
+    private void Start()
+    {
+        // If the spawner applied the skin after Awake, grab the socket now
+        if (projectileSpawnPoint == null)
+            projectileSpawnPoint = GetComponent<EnemyVisual>()?.projectileSpawnPoint;
+    }
+
     private void Update()
     {
         //check for sight and attack
@@ -97,27 +104,22 @@ public class EnemyAiTutorial : MonoBehaviour
     }
     private void AttackPlayer()
     {
-        //restrict enemy movement
         agent.SetDestination(transform.position);
-
         transform.LookAt(player);
 
-        if(!alreadyAttacked && projectile != null)
+        if (!alreadyAttacked && projectile != null)
         {
-            //Attack code here
-            //Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            //Rigidbody rb = Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation,projectileContainer).GetComponent<Rigidbody>();
-
-            //Vector3 targetPos = new Vector3(player.position.x, projectileSpawnPoint.position.y, player.position.z);
-            //Vector3 direction = (targetPos - projectileSpawnPoint.position).normalized;
-            //rb.AddForce(direction * 32f, ForceMode.Impulse);
-            //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            if (projectileSpawnPoint == null) // safety
+            {
+                Debug.LogWarning($"{name}: projectileSpawnPoint is null; skipping attack this frame.");
+                return;
+            }
 
             Vector3 targetPos = new Vector3(player.position.x, projectileSpawnPoint.position.y, player.position.z);
             Vector3 direction = (targetPos - projectileSpawnPoint.position).normalized;
 
             Rigidbody rb = Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.linearVelocity = direction * projectileSpeed; // ← THIS sets it perfectly straight
+            rb.linearVelocity = direction * projectileSpeed;
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);

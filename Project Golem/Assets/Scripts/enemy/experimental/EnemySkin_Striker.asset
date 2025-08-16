@@ -15,10 +15,10 @@ MonoBehaviour:
   modelPrefab: {fileID: 1762146786600250, guid: 077155289d2e14247bd0864b560f74ac, type: 3}
   localPosition: {x: 0, y: 0, z: 0}
   localEuler: {x: 0, y: 0, z: 0}
-  localScale: {x: 1, y: 1, z: 1}
-  controller: {fileID: 0}
-  avatar: {fileID: 0}
-  projectileSocketName: ProjectileSocket
+  localScale: {x: 0.15, y: 0.15, z: 0.15}
+  controller: {fileID: 9100000, guid: 3a64c2d0b63da5845af20c867c3c2d0c, type: 2}
+  avatar: {fileID: 9000000, guid: b0c68e6eb763a604694ce6e49557bfb4, type: 3}
+  projectileSocketName: muzzle
   leftFootName: Foot_L
   rightFootName: Foot_R
-  footstepClip: {fileID: 0}
+  footstepClip: {fileID: 8300000, guid: 677c375969b339142afa26a8c2ca3e47, type: 3}

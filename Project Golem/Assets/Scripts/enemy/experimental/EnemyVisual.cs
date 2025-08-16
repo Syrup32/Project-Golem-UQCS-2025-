@@ -16,34 +16,54 @@ public class EnemyVisual : MonoBehaviour
     {
         if (visualRoot == null) { Debug.LogError("EnemyVisual: visualRoot not set."); return; }
 
-        // Clear old
+        // Clear old visuals
         for (int i = visualRoot.childCount - 1; i >= 0; i--)
             Destroy(visualRoot.GetChild(i).gameObject);
 
         // Instantiate model
         if (skin.modelPrefab == null) { Debug.LogError("EnemyVisual: skin has no modelPrefab."); return; }
         _instancedModel = Instantiate(skin.modelPrefab, visualRoot).transform;
-        _instancedModel.localPosition = skin.localPosition;
+        _instancedModel.localPosition  = skin.localPosition;
         _instancedModel.localEulerAngles = skin.localEuler;
-        _instancedModel.localScale = skin.localScale;
+        _instancedModel.localScale     = skin.localScale;
 
-        // Ensure layer on all children
+        // Ensure Enemy layer on all children
         int layer = LayerMask.NameToLayer(enemyLayerName);
         SetLayerRecursive(_instancedModel.gameObject, layer);
 
-        // Animator hookup (optional)
+        // Animator (optional)
         _anim = _instancedModel.GetComponentInChildren<Animator>();
         if (_anim == null) _anim = _instancedModel.gameObject.AddComponent<Animator>();
         if (skin.controller) _anim.runtimeAnimatorController = skin.controller;
-        if (skin.avatar) _anim.avatar = skin.avatar;
-        _anim.applyRootMotion = false; // NavMeshAgent drives movement
+        if (skin.avatar)     _anim.avatar = skin.avatar;
+        _anim.applyRootMotion = false;
 
-        // Projectile socket
+        // Try to find a named socket on the skin; else use default; else auto-create
         projectileSpawnPoint = FindDeepChild(_instancedModel, skin.projectileSocketName) ?? defaultProjectileSpawn;
 
-        // Optional: cache foot sockets if you want stomp sync later
-        // var footL = FindDeepChild(_instancedModel, skin.leftFootName);
-        // var footR = FindDeepChild(_instancedModel, skin.rightFootName);
+        if (projectileSpawnPoint == null)
+        {
+            // Auto-create a sensible forward socket based on mesh bounds
+            var auto = new GameObject("AutoProjectileSocket").transform;
+            auto.SetParent(visualRoot, false);
+
+            // Try to place a bit in front of the visual's bounds center
+            var rend = _instancedModel.GetComponentInChildren<Renderer>();
+            if (rend != null)
+            {
+                // Convert world center to visualRoot local space, then push forward
+                var localCenter = visualRoot.InverseTransformPoint(rend.bounds.center);
+                auto.localPosition = localCenter + Vector3.forward * 0.75f;
+            }
+            else
+            {
+                auto.localPosition = new Vector3(0f, 1.2f, 0.5f);
+            }
+
+            auto.localRotation = Quaternion.identity;
+            projectileSpawnPoint = auto;
+            Debug.LogWarning($"{name}: No projectile socket found; created fallback '{auto.name}'.");
+        }
     }
 
     public Animator GetAnimator() => _anim;
