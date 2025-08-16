@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Cinemachine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -47,6 +48,20 @@ namespace StarterAssets
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
 
+		public CinemachineImpulseSource impulseSource;
+		public CinemachineImpulseSource moveImpulseSource;
+		private CinemachineVirtualCamera _virtualCamera;
+		private CinemachineBasicMultiChannelPerlin _perlin;
+		private Vector3 _previousPosition;
+		
+	    private float _previousSpeed;
+
+		[Header("Audio")]
+		public AudioSource footstepAudioSource;
+		public AudioClip footstepClip;
+		public float footstepInterval = 0.6f; // seconds between steps
+		private float footstepTimer;
+
 #if ENABLE_INPUT_SYSTEM
 		private PlayerInput _playerInput;
 #endif
@@ -93,6 +108,13 @@ namespace StarterAssets
 					map.Enable();
 				}
 			}
+			_virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+			if (_virtualCamera != null)
+			{
+				_perlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+			}
+
+			_previousPosition = transform.position;
 		}
 
 		private void Update()
@@ -102,6 +124,45 @@ namespace StarterAssets
 			GroundedCheck();
 			Move();
 			//Debug.Log($"[GroundedCheck] Is Grounded: {Grounded}");
+			float movementSpeed = new Vector2(_controller.velocity.x, _controller.velocity.z).magnitude;
+
+			// Trigger impulse when player starts moving
+			/*
+			if (movementSpeed > 0.1f && _previousSpeed <= 0.1f)
+			{
+				impulseSource.GenerateImpulse();
+			}
+			*/
+			//Camera shake stuff
+			_previousSpeed = movementSpeed;
+			Vector3 velocity = (transform.position - _previousPosition) / Time.deltaTime;
+			float horizontalSpeed = new Vector3(velocity.x, 0, velocity.z).magnitude;
+			
+
+			if (_perlin != null)
+			{
+			float targetAmplitude = horizontalSpeed > 0.1f ? 1.2f : 0f;
+			_perlin.m_AmplitudeGain = Mathf.Lerp(_perlin.m_AmplitudeGain, targetAmplitude, Time.deltaTime * 5f);			
+			}
+
+			_previousPosition = transform.position;
+			//stomping audio
+			
+
+			if (horizontalSpeed > 0.1f && Grounded)
+			{
+				footstepTimer -= Time.deltaTime;
+				if (footstepTimer <= 0f)
+				{
+					PlayFootstep();
+					footstepTimer = footstepInterval;
+				}
+			}
+			else
+			{
+				footstepTimer = 0f; // reset when not moving
+			}
+
 		}
 
 		private void LateUpdate()
@@ -117,6 +178,14 @@ namespace StarterAssets
 			{
 				float rawSensitivityInput = hotasLookSensitivity.ReadValue<float>();
 				currentLookSensitivity = Mathf.Lerp(0.5f, 2.0f, (rawSensitivityInput + 1f) / 2f);
+			}
+		}
+
+		private void PlayFootstep()
+		{
+			if (footstepAudioSource && footstepClip)
+			{
+				footstepAudioSource.PlayOneShot(footstepClip);
 			}
 		}
 
@@ -175,6 +244,16 @@ namespace StarterAssets
 			}
 			//Debug.Log($"[Move] VerticalVelocity: {_verticalVelocity}");
 			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+			
+			if (moveImpulseSource != null && _controller.velocity.magnitude > 0.1f && Grounded)
+			{
+				float moveIntensity = Mathf.Clamp(_controller.velocity.magnitude / SprintSpeed, 0f, 1f);
+				moveImpulseSource.GenerateImpulse(moveIntensity * 0.3f);
+			}
+			if (_controller.velocity.magnitude > 0.1f && Grounded && !footstepAudioSource.isPlaying)
+			{
+				footstepAudioSource.PlayOneShot(footstepClip);
+			}
 		}
 
 		private void JumpAndGravity()
