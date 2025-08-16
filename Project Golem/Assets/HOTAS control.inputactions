@@ -70,7 +70,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "weapon1",
+                    "name": "slot1",
                     "type": "Button",
                     "id": "a8ea4b85-1f7f-4110-933f-feed91544bba",
                     "expectedControlType": "",
@@ -79,7 +79,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "weapon2",
+                    "name": "slot2",
                     "type": "Button",
                     "id": "9d18b9e3-86c0-4a36-b511-8d2d43e2da7b",
                     "expectedControlType": "",
@@ -88,9 +88,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "weapon3",
+                    "name": "slot3",
                     "type": "Button",
                     "id": "6d13a891-a46d-4972-b618-98d63327739c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WeaponCycleUp",
+                    "type": "Button",
+                    "id": "57e3b9cf-4a3e-4abe-9d15-9fca24b50f42",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WeaponCycleDown",
+                    "type": "Button",
+                    "id": "72582a82-1459-4017-9711-d7cf168b014d",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -215,7 +233,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "weapon1",
+                    "action": "slot1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -226,7 +244,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "weapon1",
+                    "action": "slot1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -259,7 +277,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "weapon2",
+                    "action": "slot2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -270,7 +288,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "weapon2",
+                    "action": "slot2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -281,7 +299,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "weapon3",
+                    "action": "slot3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -292,7 +310,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "weapon3",
+                    "action": "slot3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c30bb454-eb0c-40e6-8bcc-bd73503aac26",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/button20",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeaponCycleUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0964abf2-8963-4f19-b6a2-463fccaeed78",
+                    "path": "<HID::Logitech X52 Professional H.O.T.A.S.>/button22",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeaponCycleDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
