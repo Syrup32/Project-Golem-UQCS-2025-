@@ -394,6 +394,7 @@ GameObject:
   - component: {fileID: 443609820}
   - component: {fileID: 443609821}
   - component: {fileID: 443609822}
+  - component: {fileID: 443609823}
   m_Layer: 8
   m_Name: new enemy
   m_TagString: Enemies
@@ -471,6 +472,7 @@ Transform:
   - {fileID: 1564646548}
   - {fileID: 866935410}
   - {fileID: 1396621574}
+  - {fileID: 1850759543}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &443609820
@@ -487,7 +489,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAiTutorial
   agent: {fileID: 443609818}
   player: {fileID: 1344427658}
-  projectileSpawnPoint: {fileID: 866935410}
+  projectile: {fileID: 187141644037748051, guid: 0bec8c549218ad94986d555e4a7e3b07, type: 3}
+  projectileSpeed: 25
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
@@ -501,9 +504,6 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
   timeBetweenAttacks: 10
-  projectile: {fileID: 187141644037748051, guid: 0bec8c549218ad94986d555e4a7e3b07, type: 3}
-  projectileContainer: {fileID: 1396621574}
-  projectileSpeed: 25
   sightRange: 20
   attackRange: 4
   playerInSightRange: 0
@@ -632,6 +632,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &443609823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443609816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd367ee38d6e8d046b0c36c11776fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyVisual
+  visualRoot: {fileID: 1850759543}
+  defaultProjectileSpawn: {fileID: 866935410}
+  enemyLayerName: Enemy
+  projectileSpawnPoint: {fileID: 0}
 --- !u!1001 &711157016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1980,6 +1996,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ec263a6c1255e2144b467b6395634085, type: 3}
   m_PrefabInstance: {fileID: 2121670668}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1850759542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1850759543}
+  m_Layer: 8
+  m_Name: VisualRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1850759543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850759542}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 443609819}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2035263763
 GameObject:
   m_ObjectHideFlags: 0

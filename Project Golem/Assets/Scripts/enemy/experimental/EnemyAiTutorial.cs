@@ -11,7 +11,14 @@ public class EnemyAiTutorial : MonoBehaviour
 
     public Transform player;
 
-    public Transform projectileSpawnPoint;
+    [Header("Projectile")]
+    public GameObject projectile;
+    public float projectileSpeed = 25f;
+    
+    //public Transform projectileSpawnPoint;
+    private Transform projectileSpawnPoint;
+
+    EnemyVisual _visual;
 
     public LayerMask whatIsGround, whatIsPlayer;
 
@@ -29,9 +36,12 @@ public class EnemyAiTutorial : MonoBehaviour
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public GameObject projectile;
+    
+    //Legacy projectile system reinstate if needed
+    /*public GameObject projectile;
     public Transform projectileContainer;
     public float projectileSpeed = 25f;
+    */
 
     //States
     public float sightRange, attackRange;
@@ -41,6 +51,8 @@ public class EnemyAiTutorial : MonoBehaviour
     {
         player = GameObject.Find("PlayerCapsule").transform;
         agent = GetComponent<NavMeshAgent>();
+        _visual = GetComponent<EnemyVisual>();
+        projectileSpawnPoint = _visual != null ? _visual.projectileSpawnPoint : null;
     }
     
     private void Update()
