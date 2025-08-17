@@ -4,13 +4,19 @@ public class PlayerProjectile : MonoBehaviour
 {
     public LayerMask enemyLayer;
     public LayerMask groundLayer;
-    public float damage = 25f;
+
+    private float damage = 25f;
 
     private void Start()
     {
         Destroy(gameObject, 5f); // Failsafe to clean up if it never hits anything
     }
-    
+
+    public void Initialize(float damageAmount)
+    {
+        damage = damageAmount;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (((1 << other.gameObject.layer) & enemyLayer) != 0)

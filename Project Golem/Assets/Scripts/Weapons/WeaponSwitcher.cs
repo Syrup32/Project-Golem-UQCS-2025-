@@ -12,6 +12,17 @@ public class WeaponSwitcher : MonoBehaviour
     [Header("Slots (IWeapon behaviours)")]
     public MonoBehaviour[] weaponBehaviours = new MonoBehaviour[3];
 
+    [Header("Weapon View Models (Prefabs)")]
+    public GameObject plasmaModelPrefab;
+    public GameObject rapidModelPrefab;
+    public GameObject batonModelPrefab;
+
+    [Header("Model Anchors")]
+    public Transform leftWeaponAnchor;
+    public Transform rightWeaponAnchor;
+
+    private GameObject currentRightModel;
+
     public int currentIndex { get; private set; } = 0;
     IWeapon[] weapons;
     IWeapon current;
@@ -67,9 +78,41 @@ public class WeaponSwitcher : MonoBehaviour
         if (weapons[index] == null) return;
         if (current == weapons[index]) return;
 
+        // Deactivate current GameObject if possible
+        if (weaponBehaviours[currentIndex] != null)
+            weaponBehaviours[currentIndex].gameObject.SetActive(false);
+
         current?.OnUnequip();
         currentIndex = index;
         current = weapons[index];
+
+        // Activate new one
+        if (weaponBehaviours[currentIndex] != null)
+            weaponBehaviours[currentIndex].gameObject.SetActive(true);
+
         current.OnEquip(firePoint, projectileParent);
+
+        // Always show plasma (left hand) model if not already present
+        if (plasmaModelPrefab != null && leftWeaponAnchor.childCount == 0)
+        {
+            var plasmaModel = Instantiate(plasmaModelPrefab, leftWeaponAnchor);
+            plasmaModel.transform.localPosition = Vector3.zero;
+            plasmaModel.transform.localRotation = Quaternion.identity;
+        }
+
+        // Replace right-hand weapon model
+        if (currentRightModel != null)
+            Destroy(currentRightModel);
+
+        GameObject modelToSpawn = null;
+        if (index == 0) modelToSpawn = rapidModelPrefab;
+        else if (index == 2) modelToSpawn = batonModelPrefab;
+
+        if (modelToSpawn != null)
+        {
+            currentRightModel = Instantiate(modelToSpawn, rightWeaponAnchor);
+            currentRightModel.transform.localPosition = Vector3.zero;
+            currentRightModel.transform.localRotation = Quaternion.identity;
+        }
     }
 }
