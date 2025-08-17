@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: e8a466c997566b84c895066dbd56e130
+guid: 4eb3f1b355fd0944ebed7d340f96637d
 AssetOrigin:
   serializedVersion: 1
-  productId: 106154
-  packageName: Sci Fi Warrior PBR HP Polyart
-  packageVersion: 1.2
-  assetPath: Assets/SciFiWarriorPBRHPPolyart/promotion.jpg
-  uploadId: 349698
+  productId: 90395
+  packageName: Assault Mech
+  packageVersion: 1.0
+  assetPath: Assets/Mech/Blueprint/blueprint.png
+  uploadId: 182823
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -50,7 +50,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -107,7 +107,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
